@@ -11,7 +11,6 @@ import SwiftUI
 struct AroundEgypt_DemoApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
         }
     }
 }
