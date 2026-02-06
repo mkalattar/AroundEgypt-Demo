@@ -25,7 +25,7 @@ enum Endpoint {
         case let .likeExperience(id):
             return "/\(baseURL)/\(id)/like"
         case .experienceDetails(id: let id):
-            return "/\(id)"
+            return "/\(baseURL)/\(id)"
         }
     }
     

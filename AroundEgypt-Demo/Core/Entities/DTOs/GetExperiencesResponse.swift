@@ -5,7 +5,8 @@
 //  Created by Mohamed K Attar on 06/02/2026.
 //
 
-struct GetRecentExperiencesResponse: Codable {
+nonisolated
+struct GetExperiencesResponse: Codable {
     let meta: Meta?
     let data: [Experience]?
 }

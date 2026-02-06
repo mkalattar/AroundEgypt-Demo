@@ -7,16 +7,14 @@
 
 import Foundation
 
-protocol NetworkServiceProtocol: Sendable {
-    func fetch<T: Decodable>(from endpoint: Endpoint) async throws(AENetworkError) -> T
-}
-
 final class NetworkService: NetworkServiceProtocol {
     
-    private let session: URLSession
+    private let session: URLSessionProtocol
+    private let decoder: JSONDecoder
     
-    init(session: URLSession = .shared) {
+    init(session: URLSessionProtocol = URLSession.shared, decoder: JSONDecoder = JSONDecoder()) {
         self.session = session
+        self.decoder = decoder
     }
     
     func fetch<T: Decodable>(from endpoint: Endpoint) async throws(AENetworkError) -> T {
@@ -39,9 +37,9 @@ final class NetworkService: NetworkServiceProtocol {
             throw .invalidStatusCode(statusCode: httpResponse.statusCode)
         }
         
-        // 4. Decode
         do {
-            return try JSONDecoder().decode(T.self, from: data)
+            decoder.keyDecodingStrategy = .convertFromSnakeCase
+            return try decoder.decode(T.self, from: data)
         } catch let error as DecodingError {
             throw .decodingError(innerError: error)
         } catch {
