@@ -1,0 +1,27 @@
+name: iOS Tests
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    name: Run Swift Tests
+    runs-on: macos-26
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Xcode
+        run: sudo xcode-select -s /Applications/Xcode.app 
+
+      - name: Run Tests
+        run: |
+          xcodebuild test \
+            -project AroundEgypt-Demo.xcodeproj \
+            -scheme AroundEgypt-Demo \
+            -destination 'platform=iOS Simulator,name=iPhone 17 Pro,OS=latest' \
+            -quiet
