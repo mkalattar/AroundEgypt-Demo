@@ -33,7 +33,7 @@ enum Endpoint {
         switch self {
         case .likeExperience:
             "POST"
-        default :
+        default:
             "GET"
         }
     }
