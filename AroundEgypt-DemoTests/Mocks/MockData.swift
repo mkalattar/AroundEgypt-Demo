@@ -23,4 +23,10 @@ enum MockData {
             Experience(id: "9090", title: "Pyramids", coverPhoto: "picture.jpg", description: "detailed desc", likesNo: 9, viewsNo: 9, recommended: 1, tourHtml: "tour2.html")
         ]
     }
+    
+    static func makeTempFileDirectory() throws -> URL {
+        let tempDir = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        try FileManager.default.createDirectory(at: tempDir, withIntermediateDirectories: true)
+        return tempDir
+    }
 }
