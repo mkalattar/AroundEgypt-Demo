@@ -7,12 +7,13 @@
 
 import Foundation
 
-public enum AENetworkError: Error, LocalizedError {
+enum AENetworkError: Error, LocalizedError {
     case invalidURL(innerError: URLError)
     case decodingError(innerError: DecodingError)
     case invalidStatusCode(statusCode: Int)
     case requestFailed(innerError: URLError)
     case otherError(innerError: Error)
+    case noInternetConnection
 
     public var errorDescription: String? {
         switch self {
@@ -24,6 +25,19 @@ public enum AENetworkError: Error, LocalizedError {
             return innerError.localizedDescription
         case .otherError(let innerError):
             return innerError.localizedDescription
+        case .noInternetConnection:
+            return "No Internet Connection"
+        }
+    }
+}
+
+enum AEAppError: Error, LocalizedError {
+    case alreadyLiked
+    
+    public var errorDescription: String? {
+        switch self {
+        case .alreadyLiked:
+            return nil
         }
     }
 }
