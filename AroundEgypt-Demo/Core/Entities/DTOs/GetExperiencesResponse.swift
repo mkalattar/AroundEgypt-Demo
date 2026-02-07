@@ -8,5 +8,5 @@
 nonisolated
 struct GetExperiencesResponse: Codable {
     let meta: Meta?
-    let data: [Experience]?
+    var data: [Experience]?
 }

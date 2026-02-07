@@ -21,7 +21,7 @@ struct NetworkServiceTests {
         let response: GetExperiencesResponse = try await networkService.fetch(from: .recentExperiences)
         
         #expect(response.data?.count == expectedResponse.data?.count)
-        await #expect(response.data?.first?.title == "Sphinx")
+        #expect(response.data?.first?.title == "Sphinx")
     }
     
     @Test("NetworkService successfully posts a like to an experience")
