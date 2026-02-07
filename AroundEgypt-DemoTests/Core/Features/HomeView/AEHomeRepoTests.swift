@@ -13,10 +13,12 @@ struct AEHomeRepoTests {
     
     @Test("Test Repo saves to cache")
     func testRepoSavesToCache() async throws {
-        let userDefault = UserDefaults(suiteName: #file)!
+        let suiteName = "testing_suite"
+        
+        let userDefault = UserDefaults(suiteName: suiteName)!
         
         defer {
-            userDefault.removePersistentDomain(forName: #file)
+            userDefault.removePersistentDomain(forName: suiteName)
         }
         
         let expectedResponse = GetExperiencesResponse(meta: nil, data: MockData.makeExperiences())

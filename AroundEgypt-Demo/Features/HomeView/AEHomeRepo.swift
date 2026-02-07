@@ -12,7 +12,7 @@ protocol AEHomeRepoProtocol: Sendable {
     func getRecentExperiencesFromCache() async throws -> GetExperiencesResponse
     
     func getRecommendedExperiencesFromNetwork() async throws -> GetExperiencesResponse
-    func getRecommndedExperiencesFromCache() async throws -> GetExperiencesResponse
+    func getRecommendedExperiencesFromCache() async throws -> GetExperiencesResponse
     
     func searchExperiences(query: String) async throws -> GetExperiencesResponse
     func likeExperience(id: String) async throws -> Int?
@@ -44,7 +44,7 @@ actor AEHomeRepo: AEHomeRepoProtocol {
     }
     
     func getRecentExperiencesFromCache() async throws -> GetExperiencesResponse {
-        var experiences: [Experience]? = try await cachingService.load(forKey: "recent_exp")
+        let experiences: [Experience]? = try await cachingService.load(forKey: "recent_exp")
         
         guard var experiences else {
             throw AENetworkError.noInternetConnection
@@ -61,7 +61,7 @@ actor AEHomeRepo: AEHomeRepoProtocol {
         return response
     }
     
-    func getRecommndedExperiencesFromCache() async throws -> GetExperiencesResponse {
+    func getRecommendedExperiencesFromCache() async throws -> GetExperiencesResponse {
         let experiences: [Experience]? = try await cachingService.load(forKey: "recommended_exp")
         
         guard let experiences else {
