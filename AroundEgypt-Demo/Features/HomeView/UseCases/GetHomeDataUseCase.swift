@@ -6,7 +6,7 @@
 //
 
 protocol GetHomeDataUseCaseProtocol {
-    func execute() async throws -> (recommended: [Experience], recent: [Experience])
+    func execute() async throws -> (recent: [Experience], recommended: [Experience])
 }
 
 struct GetHomeDataUseCase: GetHomeDataUseCaseProtocol {
@@ -19,7 +19,7 @@ struct GetHomeDataUseCase: GetHomeDataUseCaseProtocol {
         self.nwMonitor = nwMonitor
     }
     
-    func execute() async throws -> (recommended: [Experience], recent: [Experience]) {
+    func execute() async throws -> (recent: [Experience], recommended: [Experience]) {
         
         if nwMonitor.isConnected {
             return try await self.fetchFromNetwork()

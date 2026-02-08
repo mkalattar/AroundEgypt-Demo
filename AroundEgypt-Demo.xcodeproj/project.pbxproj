@@ -21,9 +21,22 @@
 		B6BB5A452F363D66005001C0 /* AroundEgypt-DemoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "AroundEgypt-DemoTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		B6B8ECCE2F37D26500A1FB3E /* Exceptions for "AroundEgypt-Demo" folder in "AroundEgypt-Demo" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = B6BB59E52F360BA4005001C0 /* AroundEgypt-Demo */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		B6BB59E82F360BA4005001C0 /* AroundEgypt-Demo */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				B6B8ECCE2F37D26500A1FB3E /* Exceptions for "AroundEgypt-Demo" folder in "AroundEgypt-Demo" target */,
+			);
 			path = "AroundEgypt-Demo";
 			sourceTree = "<group>";
 		};
@@ -331,6 +344,7 @@
 				DEVELOPMENT_TEAM = BJUL9DNG5D;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "AroundEgypt-Demo/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Around Egypt";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -369,6 +383,7 @@
 				DEVELOPMENT_TEAM = BJUL9DNG5D;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "AroundEgypt-Demo/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Around Egypt";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;

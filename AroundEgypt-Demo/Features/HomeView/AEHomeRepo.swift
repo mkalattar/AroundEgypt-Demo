@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol AEHomeRepoProtocol: Sendable {
+protocol AEHomeRepoProtocol {
     func getRecentExperiencesFromNetwork() async throws -> GetExperiencesResponse
     func getRecentExperiencesFromCache() async throws -> GetExperiencesResponse
     
@@ -22,16 +22,17 @@ actor AEHomeRepo: AEHomeRepoProtocol {
     
     private let networkService: NetworkServiceProtocol
     private let cachingService: CacheServiceProtocol
-    private let userDefaults: UserDefaults
+    private var userDefaults: UserDefaults = .standard
     
     private var likedExpIDs: Set<String> = []
     
-    init(networkService: NetworkServiceProtocol, cachingService: CacheServiceProtocol, userDefaults: UserDefaults = .standard) async {
+    init(networkService: NetworkServiceProtocol, cachingService: CacheServiceProtocol, userDefaults: UserDefaults = .standard) {
         self.networkService = networkService
         self.cachingService = cachingService
-        self.userDefaults = userDefaults
         
-        likedExpIDs = loadLikedIds()
+        Task {
+            await self.loadData(userDefaults: userDefaults)
+        }
     }
     
     func getRecentExperiencesFromNetwork() async throws -> GetExperiencesResponse {
@@ -56,7 +57,10 @@ actor AEHomeRepo: AEHomeRepoProtocol {
     }
     
     func getRecommendedExperiencesFromNetwork() async throws -> GetExperiencesResponse {
-        let response: GetExperiencesResponse = try await networkService.fetch(from: .recommendedExperiences)
+        var response: GetExperiencesResponse = try await networkService.fetch(from: .recommendedExperiences)
+        
+        response.data = self.applyLocalLikes(to: response.data ?? [])
+        
         try await cachingService.save(response.data, forKey: "recommended_exp")
         return response
     }
@@ -64,9 +68,11 @@ actor AEHomeRepo: AEHomeRepoProtocol {
     func getRecommendedExperiencesFromCache() async throws -> GetExperiencesResponse {
         let experiences: [Experience]? = try await cachingService.load(forKey: "recommended_exp")
         
-        guard let experiences else {
+        guard var experiences else {
             throw AENetworkError.noInternetConnection
         }
+        
+        experiences = self.applyLocalLikes(to: experiences)
         
         return GetExperiencesResponse(meta: nil, data: experiences)
     }
@@ -109,6 +115,11 @@ actor AEHomeRepo: AEHomeRepoProtocol {
         }
         
         return response.data
+    }
+    
+    private func loadData(userDefaults: UserDefaults) async {
+        self.userDefaults = userDefaults
+        likedExpIDs = loadLikedIds()
     }
     
     private func applyLocalLikes(to experiences: [Experience]) -> [Experience] {
